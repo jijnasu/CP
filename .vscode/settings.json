@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "stdio.h": "c",
+        "bitset": "c",
+        "chrono": "c",
+        "algorithm": "c",
+        "ratio": "c",
+        "cmath": "c"
+    }
+}
