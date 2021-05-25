@@ -1,17 +1,80 @@
-
-
-
-
-
 #include<stdio.h>
 #include<stdlib.h>
+#include<malloc.h>
 struct NODE
 {
     int info;
     struct NODE *next;
 };
 typedef struct NODE node;
-
+node* insertatbegin(node*);
+void traverse(node*);
+void insertatend(node*);
+void searchele(node*, int);
+void insert_at_ith(node*, int);
+int main()
+{
+    node *start, *temp;
+    //allocate memory for nodes in the single linked list in heap
+    int opt,i,val,ele;
+    while(1)
+    {
+        printf("CHOOSE MENU \n 1.create a linked list \n 2. traversal \n 3. insert an element at begin \n 4. insert an element at end \n 5. insert an element after ith node of list \n 6. insert a new node after a particular value of list \n 7. search an element from a list \n 8. exit \n");
+        scanf("%d",&opt);
+        switch(opt)
+        {
+        case 1:
+            start = (node*)malloc(sizeof(node));
+            printf("input to the 1st node :");
+            scanf("%d",&(start->info));
+            start->next=NULL;
+            temp=start;
+            char ch='y';
+            while(ch=='y')
+            {
+                temp->next=(node*)malloc(sizeof(node));
+                temp=temp->next;
+                printf("\n input node :");
+                scanf("%d",&(temp->info));
+                printf("enter y to continue or else n to stop :");
+                scanf(" %c",&ch);
+            }
+            temp->next=NULL;
+            break;
+        case 2:
+            printf("the list is :\n");
+            traverse(start);
+            break;
+        case 3:
+            start=insertatbegin(start);
+            break;
+        case 4:
+            insertatend(start);
+            break;
+        case 5:
+            printf("enter the location :");
+            scanf("%d",&i);
+            insert_at_ith(start,i);
+            break;
+        case 6:
+            printf("enter the value after which you wanna insert the element :");
+            scanf("%d",&val);
+            insertaftervalue(start,val);
+            break;
+        case 7:
+            printf("enter the element you wanna search :");
+            scanf("%d",&ele);
+            searchele(start,ele);
+            break;
+        case 8:
+            exit(1);
+            break;
+        default :
+            printf("invalid option\n");
+        }
+    }
+    return 0;
+}
 void traverse(node *s)
 {
     node *temp;
@@ -21,7 +84,7 @@ void traverse(node *s)
         printf("%d\t", temp->info);
         temp=temp->next;
     }
-    printf("\n\n");
+    printf("\n");
 }
 
 node* insertatbegin(node *s)
@@ -114,69 +177,183 @@ void insert_at_ith(node* s, int i)
     ptr->next=new;
 }
 
-int main()
-{
-    node *start, *temp;
-    //allocate memory for nodes in the single linked list in heap
-    int opt,i,val,ele;
-    while(1)
-    {
-        printf("MENU \n\n 1.create a linked list \n2. traversal \n3. insert an element at begin \n4. insert an element at end \n5. insert an element after ith node of list \n6. insert a new node after a particular value of list \n7. search an element from a list \n8. exit \n");
-        scanf("%d",&opt);
-        switch(opt)
-        {
-        case 1:
-            start = (node*)malloc(sizeof(node));
-            printf("input to the 1st node :");
-            scanf("%d",&(start->info));
-            start->next=NULL;
-            temp=start;
-            char ch='y';
-            while(ch=='y')
-            {
-                temp->next=(node*)malloc(sizeof(node));
-                temp=temp->next;
-                printf("\n input node :");
-                scanf("%d",&(temp->info));
-                printf("enter y to continue or else n to stop :");
-                scanf(" %c",&ch);
-            }
-            temp->next=NULL;
-            break;
-        case 2:
-            printf("the list is :\n");
-            traverse(start);
-            break;
-        case 3:
-            start=insertatbegin(start);
-            break;
-        case 4:
-            insertatend(start);
-            break;
-        case 5:
-            printf("enter the location :");
-            scanf("%d",&i);
-            insert_at_ith(start,i);
-            break;
-        case 6:
-            printf("enter the value after which you wanna insert the element :");
-            scanf("%d",&val);
-            insertaftervalue(start,val);
-            break;
-        case 7:
-            printf("enter the element you wanna search :");
-            scanf("%d",&ele);
-            searchele(start,ele);
-            break;
-        case 8:
-            exit(1);
-            break;
-        default :
-            printf("invalid option\n");
-        }
-    }
-    return 0;
-}
+
+
+
+// #include<stdio.h>
+// #include<stdlib.h>
+// struct NODE
+// {
+//     int info;
+//     struct NODE *next;
+// };
+// typedef struct NODE node;
+
+// void traverse(node *s)
+// {
+//     node *temp;
+//     temp=s;
+//     while(temp!=NULL)
+//     {
+//         printf("%d\t", temp->info);
+//         temp=temp->next;
+//     }
+//     printf("\n\n");
+// }
+
+// node* insertatbegin(node *s)
+// {
+//     node *new;
+//     new=(node*)malloc(sizeof(node));
+//     printf("\n input node that will be added to 1st :");
+//     scanf("%d",&(new->info));
+//     new->next=s;
+//     s=new;
+//     return s;
+// }
+
+// void insertatend(node *s)
+// {
+//     node *new;
+//     new=(node*)malloc(sizeof(node));
+//     printf("\n input node that will be added to last :");
+//     scanf("%d",&(new->info));
+//     new->next=NULL;
+//     while(s->next!=NULL)
+//     {
+//         s=s->next;
+//     }
+//     s->next=new;
+// }
+
+// void searchele(node *s, int ele)
+// {
+//     node *ptr;
+//     ptr=s;
+//     while(ptr!=NULL)
+//     {
+//         if(ptr->info==ele)
+//         {
+//             printf("element is found\n");
+//             break;
+//         }
+//         else
+//         {
+//             ptr=ptr->next;
+//         }
+//     }
+// }
+
+// void insertaftervalue(node *s, int val)
+// {
+//     node *temp, *new;
+//     temp=s;
+//     while(temp!=NULL)
+//     {
+//         if(temp->info==val)
+//         {
+//             break;
+//         }
+//         else
+//         {
+//             temp=temp->next;
+//         }
+//     }
+//     new=(node*)malloc(sizeof(node));
+//     printf("input the element :");
+//     scanf("%d",&(new->info));
+//     if(temp!=NULL)
+//     {
+//         new->next=temp->next;
+//         temp->next=new;
+//     }
+//     else
+//     {
+//         printf("the node ain't present\n");
+//     }
+// }
+
+// void insert_at_ith(node* s, int i)
+// {
+//     node *ptr, *new;
+//     int k;
+//     k=0;
+//     ptr=s;
+//     while(k<i-1)
+//     {
+//         ptr=ptr->next;
+//         k++;
+//     }
+//     new=(node*)malloc(sizeof(node));
+//     printf("input new node which will be inserted after ith position :");
+//     scanf("%d",&(new->info));
+//     new->next=ptr->next;
+//     ptr->next=new;
+// }
+
+// int main()
+// {
+//     node *start, *temp;
+//     //allocate memory for nodes in the single linked list in heap
+//     int opt,i,val,ele;
+//     while(1)
+//     {
+//         printf("MENU \n\n 1.create a linked list \n2. traversal \n3. insert an element at begin \n4. insert an element at end \n5. insert an element after ith node of list \n6. insert a new node after a particular value of list \n7. search an element from a list \n8. exit \n");
+//         scanf("%d",&opt);
+//         switch(opt)
+//         {
+//         case 1:
+//             start = (node*)malloc(sizeof(node));
+//             printf("input to the 1st node :");
+//             scanf("%d",&(start->info));
+//             start->next=NULL;
+//             temp=start;
+//             char ch='y';
+//             while(ch=='y')
+//             {
+//                 temp->next=(node*)malloc(sizeof(node));
+//                 temp=temp->next;
+//                 printf("\n input node :");
+//                 scanf("%d",&(temp->info));
+//                 printf("enter y to continue or else n to stop :");
+//                 scanf(" %c",&ch);
+//             }
+//             temp->next=NULL;
+//             break;
+//         case 2:
+//             printf("the list is :\n");
+//             traverse(start);
+//             break;
+//         case 3:
+//             start=insertatbegin(start);
+//             break;
+//         case 4:
+//             insertatend(start);
+//             break;
+//         case 5:
+//             printf("enter the location :");
+//             scanf("%d",&i);
+//             insert_at_ith(start,i);
+//             break;
+//         case 6:
+//             printf("enter the value after which you wanna insert the element :");
+//             scanf("%d",&val);
+//             insertaftervalue(start,val);
+//             break;
+//         case 7:
+//             printf("enter the element you wanna search :");
+//             scanf("%d",&ele);
+//             searchele(start,ele);
+//             break;
+//         case 8:
+//             exit(1);
+//             break;
+//         default :
+//             printf("invalid option\n");
+//         }
+//     }
+//     return 0;
+// }
 
 
 
