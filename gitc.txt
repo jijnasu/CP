@@ -1,0 +1,66 @@
+
+
+$ code <file or folder name>    >>>>> opens in VS code
+
+$ git init
+
+$ git status
+
+$ cat .gitconfig
+
+$ git add <file name>
+
+$ git commit
+
+$ git add -A       >>>>> adds all files 
+$ git add --all    >>>>> adds all files 
+$ git add .        >>>>> adds all files 
+
+$ git commit -m "message" >>>>> commits all with message
+
+$ git commit -am "message" >>>>> adds and commits all with message
+
+$ git log
+
+$ git log --oneline 
+
+$ git config --global --unset core.editor
+
+$ >> py2.py     >>>>> creates in not present
+
+$ > py2.py      >>>>> overwrites the file
+
+$ echo "e2" >> py2.py
+
+$ echo "e2" > py2.py
+
+$ git mv <ch2.txt> <ch22.txt>   >>>>> to rename a file
+
+$ git restore -- <file name>        >>>>> to restore a specific file
+
+$ rm <file>     >>>>> to delete a file
+
+$ git rm <file> >>>>> to delete and add to staged a file
+
+$ git reset     >>>>> removes all staged files
+
+$ git clone <repo1> <repo2>     >>>>> clones repo1 to repo2
+
+$ git clone <repo1 link from github> <repo2>     >>>>> clones repo1 to repo2 using link
+
+$ .gitignore 	>>>>> git ignores indicated untracked files in .gitignore
+		>>>>> new files can be easily ignored as they are untracked initially
+		>>>>> but tracked files need to be untracked first
+
+$$$$$ git ignores empty files in the repository
+
+$ git remote add origin <https://github.com/jijnasu/f1.git(github link)>   >>>>> connects local to remote repository
+
+$ git push -u origin main 		>>>>> pushes local repo to remote repo
+$ git push --set-upstream origin master	
+
+$ git remote -v					>>>>> prints info of remote repo
+
+$ git config -l
+$ git config --list			>>>>> prints configure details
+
