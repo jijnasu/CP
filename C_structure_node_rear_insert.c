@@ -8,11 +8,11 @@ typedef struct NODE
 }node;
 
 void traverse(node *);
-void rear_insert(node **rear,node **temp)
+node* rear_insert(node *rear,node *temp)
 {
-    (*rear)->next = *temp;
-    (*rear) = (*rear)->next;
-    // *start = *temp;
+    (rear)->next = temp;
+    (rear) = (rear)->next;
+    return rear;
 }
 
 void main()
@@ -53,7 +53,7 @@ void main()
             printf("Enter info. for new node : ");
             scanf("%d",&(ptr->info));
             ptr->next = NULL;
-            rear_insert(&rear,&ptr);
+            rear=rear_insert(rear,ptr);
         }
         else
             break;

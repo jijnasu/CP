@@ -8,16 +8,34 @@ typedef struct NODE
 }node;
 
 void traverse(node *);
-node* front_insert(node *start,node *temp)
+node* insert_position(node *start,node *ele,int loc)
 {
-    (temp)->next = start;
-    start = temp;
+    int i=1;
+    node *temp;
+    if(loc==0)
+    {
+        (ele)->next = start;
+        start = ele;
+    }
+    else
+    {
+        for(temp=start;i<loc;i++)
+            if(temp->next != NULL)
+                temp=temp->next;
+            else
+                break;
+            ele->next=temp->next;
+            temp->next = ele;
+      
+    }
     return start;
+        
 }
 
 void main()
 {
     node *start,*ptr;
+    int loc;
     char ch='y';
     ptr = start = (node*)malloc(sizeof(node));
     printf("Enter information for 1st node : ");
@@ -44,21 +62,24 @@ void main()
     printf("\n================================================\n");
     while(1)
     {
-        printf("Do you want to insert node at front(y/n) : ");
+        printf("Do you want to insert new node(y/n) : ");
         scanf(" %c",&ch);
         if(ch=='y')
         {
+            printf("Enter position for new node : ");
+            scanf("%d",&loc);
             ptr = (node*)malloc(sizeof(node));
             ptr->next = NULL;
             printf("Enter info. for new node : ");
             scanf("%d",&(ptr->info));
-            start=front_insert(start,ptr);
+            start=insert_position(start,ptr,loc-1);
+            traverse(start);
         }
         else
             break;
     }
 
-    traverse(start);
+    // traverse(start);
     
 }
 
@@ -70,7 +91,7 @@ void traverse(node *start)
         printf("%d  ",start->info);
         start = start->next;
     }
-
+    printf("\n");
 }
 
 

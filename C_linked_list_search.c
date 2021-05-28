@@ -8,16 +8,30 @@ typedef struct NODE
 }node;
 
 void traverse(node *);
-node* front_insert(node *start,node *temp)
+void search(node *start,int val)
 {
-    (temp)->next = start;
-    start = temp;
-    return start;
+    int loc=-1;
+    while(start->next!=NULL)
+    {
+        if(start->info == val)
+        {
+            loc++;
+            break;
+        }
+        start=start->next;
+    }
+    if(loc>=0)
+        printf("The element %d is at position %d ...",val,loc+1);
+    else
+        printf("Element not found...");
+    
 }
+
 
 void main()
 {
     node *start,*ptr;
+    int val;
     char ch='y';
     ptr = start = (node*)malloc(sizeof(node));
     printf("Enter information for 1st node : ");
@@ -44,21 +58,24 @@ void main()
     printf("\n================================================\n");
     while(1)
     {
-        printf("Do you want to insert node at front(y/n) : ");
+        printf("Do you want to insert new node(y/n) : ");
         scanf(" %c",&ch);
         if(ch=='y')
         {
-            ptr = (node*)malloc(sizeof(node));
-            ptr->next = NULL;
-            printf("Enter info. for new node : ");
-            scanf("%d",&(ptr->info));
-            start=front_insert(start,ptr);
+            printf("Enter value of node to be searched : ");
+            scanf("%d",&val);
+            search(start,val-1);
+            // ptr = (node*)malloc(sizeof(node));
+            // ptr->next = NULL;
+            // printf("Enter info. for new node : ");
+            // scanf("%d",&(ptr->info));
+            // traverse(start);
         }
         else
             break;
     }
 
-    traverse(start);
+    // traverse(start);
     
 }
 
@@ -70,7 +87,7 @@ void traverse(node *start)
         printf("%d  ",start->info);
         start = start->next;
     }
-
+    printf("\n");
 }
 
 

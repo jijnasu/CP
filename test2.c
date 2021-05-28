@@ -1,40 +1,153 @@
 
 
 
+
+
+
 #include<stdio.h>
-struct NODE
+#include<stdlib.h>
+
+typedef struct NODE
 {
     int info;
     struct NODE *next;
-};
-typedef struct NODE node;
+}node;
+
+void traverse(node *);
+void front_insert(node **start,node **temp)
+{
+    (*temp)->next = *start;
+    *start = *temp;
+}
+
 void main()
 {
-    node *start,*temp,*ptr;
-    printf("enter the first node ");
-    start= (node *)malloc(sizeof(node));
-    scanf("%d",&(start->info));
+    node *start,*ptr;
     char ch='y';
-    temp=start;
-    while(ch=='y')
+    ptr = start = (node*)malloc(sizeof(node));
+    printf("Enter information for 1st node : ");
+    scanf("%d",&(start->info));
+    start->next = NULL;
+    while(1)
     {
-        temp->next= (node *)malloc(sizeof(node));
-        temp= temp->next;
-        printf("\nenter another node ");
-        scanf("%d",&(temp->info));
-        printf("\nenter X to stop entering nodes and y to enter new node :: ");
+        printf("Do you want to add node(y/n) : ");
         scanf(" %c",&ch);
+        if(ch=='y')
+        {
+            ptr->next = (node*)malloc(sizeof(node));
+            ptr = ptr->next;
+            printf("Enter info. for new node : ");
+            scanf("%d",&(ptr->info));
+        }
+        else
+        {
+            ptr->next = NULL;
+            break;
+        }
     }
-    temp->next= NULL;
-    ptr=start;
-    printf("\nentered linked list is\n ");
-    while(ptr!=NULL)
+    traverse(start);
+    printf("\n================================================\n");
+    while(1)
     {
-        printf("%d\t",(ptr->info));
-        ptr=ptr->next;
+        printf("Do you want to insert node at front(y/n) : ");
+        scanf(" %c",&ch);
+        if(ch=='y')
+        {
+            ptr = (node*)malloc(sizeof(node));
+            ptr->next = NULL;
+            printf("Enter info. for new node : ");
+            scanf("%d",&(ptr->info));
+            front_insert(&start,&ptr);
+        }
+        else
+            break;
+    }
+
+    traverse(start);
+    
+}
+
+void traverse(node *start)
+{
+    printf("\nThe linked list is : ");
+    while(start != NULL)
+    {
+        printf("%d  ",start->info);
+        start = start->next;
     }
 
 }
+
+
+
+
+
+
+
+
+
+// #include<stdio.h>
+
+
+// void temp(int **x,*y,z)
+// {
+    
+// }
+
+
+// void main()
+// {
+//     int **x,*y,z;
+//     y=z;
+//     z=22;
+//     temp(x,y,z);
+//     // printf("***%d\n",**x);
+//     printf("***%d\n",*y);
+//     printf("***%d\n",z);
+// }
+
+
+
+
+
+
+
+
+
+// #include<stdio.h>
+// struct NODE
+// {
+//     int info;
+//     struct NODE *next;
+// };
+// typedef struct NODE node;
+// void main()
+// {
+//     node *start,*temp,*ptr;
+//     printf("enter the first node ");
+//     start= (node *)malloc(sizeof(node));
+//     scanf("%d",&(start->info));
+//     char ch='y';
+//     temp=start;
+//     while(ch=='y')
+//     {
+//         temp->next= (node *)malloc(sizeof(node));
+//         temp= temp->next;
+//         printf("\nenter another node ");
+//         scanf("%d",&(temp->info));
+//         printf("\nenter X to stop entering nodes and y to enter new node :: ");
+//         scanf(" %c",&ch);
+//     }
+//     temp->next= NULL;
+//     ptr=start;
+//     printf("\nentered linked list is\n ");
+//     while(ptr!=NULL)
+//     {
+//         printf("%d\t",(ptr->info));
+//         ptr=ptr->next;
+//     }
+
+// }
 
 
 
