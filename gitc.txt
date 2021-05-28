@@ -64,3 +64,4 @@ $ git remote -v					>>>>> prints info of remote repo
 $ git config -l
 $ git config --list			>>>>> prints configure details
 
+.vscode
