@@ -1,82 +1,318 @@
 
 
-
-
-
-
 #include<stdio.h>
 #include<stdlib.h>
-
-typedef struct NODE
+#include<malloc.h>
+struct node
 {
     int info;
-    struct NODE *next;
-}node;
+    struct node *next;
+};
+typedef struct node nd;
+nd* creat(nd*);
+void display(nd*);
+nd* binsert(nd*);
+void einsert(nd*);
+void insert(nd*,int);
+void vinsert(nd*,int);
+void search(nd*,int);
 
-void traverse(node *);
-void front_insert(node **start,node **temp)
+int main()
 {
-    (*temp)->next = *start;
-    *start = *temp;
+    nd *start=NULL,*temp;
+    int ch,i,val,ele;
+    while(1)
+    {
+        printf("\nCHOOSE MENU \n 1. Create a linked list \n 2. Traversal ");
+        printf("\n 3. Insert an element at begin \n 4. Insert an element at end");
+        printf("\n 5. Insert an element after ith node of list ");
+        printf("\n 6. Insert a new node after a particular value of list ");
+        printf("\n 7. Search an element from a list");
+        printf("\n 8. Sort the nodes \n 9. Delete 1st node");
+        printf("\n 10.Delete last node \n 11.");
+        printf("\n>>>");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+        case 1:
+            printf("New linked list\n");
+            start=creat(start);
+            break;
+        case 2:
+            printf("The list is::\n ");
+            display(start);
+            break;
+        case 3:
+            start=binsert(start);
+            break;
+        case 4:
+            einsert(start);
+            break;
+        case 5:
+            printf("\nInput i :: ");
+            scanf("%d",&i);
+            insert(start,i);
+            break;
+        case 6:
+            printf("\nInput value :: ");
+            scanf("%d",&val);
+            vinsert(start,val);
+            break;
+        case 7:
+            printf("\nInput element :: ");
+            scanf("%d",&ele);
+            search(start,ele);
+        }
+    }
+    return 0;
 }
 
-void main()
+nd* creat(nd *start)
 {
-    node *start,*ptr;
+    nd *temp;
+    if(start==NULL)
+    {
+        start=(nd*)malloc(sizeof(nd));
+        printf("Input data to 1st node:: ");
+        scanf("%d",&(start->info));
+    }
+    temp=start;
     char ch='y';
-    ptr = start = (node*)malloc(sizeof(node));
-    printf("Enter information for 1st node : ");
-    scanf("%d",&(start->info));
-    start->next = NULL;
-    while(1)
+    while(ch=='y')
     {
-        printf("Do you want to add node(y/n) : ");
+        temp->next=(nd*)malloc(sizeof(nd));
+        temp=temp->next;
+        printf("Input new node:: ");
+        scanf("%d",&(temp->info));
+        printf("Enter 'y' to continue and 'n' to stop:: ");
         scanf(" %c",&ch);
-        if(ch=='y')
-        {
-            ptr->next = (node*)malloc(sizeof(node));
-            ptr = ptr->next;
-            printf("Enter info. for new node : ");
-            scanf("%d",&(ptr->info));
-        }
-        else
-        {
-            ptr->next = NULL;
-            break;
-        }
     }
-    traverse(start);
-    printf("\n================================================\n");
-    while(1)
-    {
-        printf("Do you want to insert node at front(y/n) : ");
-        scanf(" %c",&ch);
-        if(ch=='y')
-        {
-            ptr = (node*)malloc(sizeof(node));
-            ptr->next = NULL;
-            printf("Enter info. for new node : ");
-            scanf("%d",&(ptr->info));
-            front_insert(&start,&ptr);
-        }
-        else
-            break;
-    }
-
-    traverse(start);
-    
+    temp->next=NULL;
+    return start;
 }
 
-void traverse(node *start)
+void display(nd *start)
 {
-    printf("\nThe linked list is : ");
-    while(start != NULL)
+    nd *ptr;
+    ptr=start;
+    //printf("The list is::\n ");
+    while(ptr!=NULL)
     {
-        printf("%d  ",start->info);
-        start = start->next;
+        printf("%d\t",ptr->info);
+        ptr=ptr->next;
     }
-
+    printf("\n");
 }
+
+nd* binsert(nd *s)
+{
+    nd *new;
+    new=(nd*)malloc(sizeof(nd));
+    printf("\nNew 1st node:: ");
+    scanf("%d",&(new->info));
+    new->next=s;
+    s=new;
+    return s;
+}
+
+void einsert(nd *s)
+{
+    nd *new,*temp;
+    temp=s;
+    while(temp->next!=NULL)
+    {
+        temp=temp->next;
+    }
+    new=(nd*)malloc(sizeof(nd));
+    new->next=NULL;
+    printf("\nInput last node:: ");
+    scanf("%d",&(new->info));
+    temp->next=new;
+}
+
+void insert(nd *s, int i)
+{
+    nd *new,*ptr;
+    int k;
+    k=1;
+    ptr=s;
+    while(k<i)
+    {
+        ptr=ptr->next;
+        k++;
+    }
+    new=(nd*)malloc(sizeof(nd));
+    printf("\nNew node:: ");
+    scanf("%d",&(new->info));
+    new->next=ptr->next;
+    ptr->next=new;
+}
+
+void vinsert(nd *s,int val)
+{
+    nd *temp,*new;
+    temp=s;
+    while(temp!=NULL)
+    {
+        if(temp->info==val)
+        {
+            break;
+        }
+        else
+        {
+            temp=temp->next;
+        }
+    }
+    new=(nd*)malloc(sizeof(nd));
+    printf("New node:: ");
+    scanf("%d",&(new->info));
+    if(temp!=NULL)
+    {
+        new->next=temp->next;
+        temp->next=new;
+    }
+    else
+    {
+        printf("The node is not present .\n");
+    }
+}
+
+void search(nd *start,int ele)
+{
+    nd *ptr;
+    ptr=start;
+    int flag;
+    while(ptr!=NULL)
+    {
+        if(ptr->info==ele)
+        {
+            flag=1;
+            break;
+        }
+        else
+        {
+            ptr=ptr->next;
+        }
+    }
+    if(flag==1)
+    {
+        printf("Element is present.\n");
+    }
+    else
+    {
+        printf("Element is absent.\n");
+    }
+}
+
+
+// #include<stdio.h>
+// #include<stdlib.h>
+
+// typedef struct NODE
+// {
+//     // float x;
+//     int info[10];
+//     char *a;
+//     // double dd;
+//     // char cj;
+//     // double ddd;
+//     // int xx;
+// }node;
+
+// void main()
+// {
+
+//     node ptr;
+//     ptr.a="jhvjkh";
+//     // printf("%d",sizeof(ptr));
+//     printf("%s",ptr.a);
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// #include<stdio.h>
+// #include<stdlib.h>
+
+// typedef struct NODE
+// {
+//     int info;
+//     struct NODE *next;
+// }node;
+
+// void traverse(node *);
+// void front_insert(node **start,node **temp)
+// {
+//     (*temp)->next = *start;
+//     *start = *temp;
+// }
+
+// void main()
+// {
+//     node *start,*ptr;
+//     char ch='y';
+//     ptr = start = (node*)malloc(sizeof(node));
+//     printf("Enter information for 1st node : ");
+//     scanf("%d",&(start->info));
+//     start->next = NULL;
+//     while(1)
+//     {
+//         printf("Do you want to add node(y/n) : ");
+//         scanf(" %c",&ch);
+//         if(ch=='y')
+//         {
+//             ptr->next = (node*)malloc(sizeof(node));
+//             ptr = ptr->next;
+//             printf("Enter info. for new node : ");
+//             scanf("%d",&(ptr->info));
+//         }
+//         else
+//         {
+//             ptr->next = NULL;
+//             break;
+//         }
+//     }
+//     traverse(start);
+//     printf("\n================================================\n");
+//     while(1)
+//     {
+//         printf("Do you want to insert node at front(y/n) : ");
+//         scanf(" %c",&ch);
+//         if(ch=='y')
+//         {
+//             ptr = (node*)malloc(sizeof(node));
+//             ptr->next = NULL;
+//             printf("Enter info. for new node : ");
+//             scanf("%d",&(ptr->info));
+//             front_insert(&start,&ptr);
+//         }
+//         else
+//             break;
+//     }
+
+//     traverse(start);
+    
+// }
+
+// void traverse(node *start)
+// {
+//     printf("\nThe linked list is : ");
+//     while(start != NULL)
+//     {
+//         printf("%d  ",start->info);
+//         start = start->next;
+//     }
+
+// }
 
 
 
