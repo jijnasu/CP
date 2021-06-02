@@ -11,18 +11,19 @@ typedef struct NODE
 
 node* create();
 void traverse(node *);
-node* reverse_list(node *);
+void search(node *,int);
+// node* reverse_list(node *);
 
 void main()
 {
     node *start,*ptr,*reverse;
     char ch;
+    int val;
     start=create();
     traverse(start);
-    // traverse(start);
-    reverse=reverse_list(start);
-    printf("After reversing the list :");
-    traverse(reverse);
+    printf("Enter the value to be searched : ");
+    scanf("%d",&val);
+    search(start,val);
     
 }
 
@@ -67,21 +68,24 @@ void traverse(node *start)
     printf("\n");
 }
 
-node* reverse_list(node *front)
+
+
+void search(node *start,int val)
 {
-    node *temp,*reverse;
-    reverse=(node*)malloc(sizeof(node));
-    reverse->info=front->info;
-    reverse->next=NULL;
-    front=front->next;
-    while(front!=NULL)
+    int loc=0,flag=0;
+    while(start!=NULL)
     {
-        temp=reverse;
-        reverse=(node*)malloc(sizeof(node));
-        reverse->info=front->info;
-        reverse->next=temp;
-        front=front->next;
+        if(start->info == val)
+        {
+            flag=1;
+            break;
+        }
+        loc++;
+        start=start->next;
     }
+    if(flag)
+        printf("The element %d is at position %d ...\n",val,loc+1);
+    else
+        printf("Element not found...\n");
     
-    return reverse;
 }
