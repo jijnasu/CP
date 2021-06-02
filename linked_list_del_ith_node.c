@@ -29,16 +29,16 @@ void main()
             printf("Enter psition to delete : ");
             scanf("%d",&pos);
 
-            if(pos<=size)
+            if(pos>=0 && pos<=size)
             {
                 ptr=delete_ith(&start,&size,pos);
                 printf("Deleted node is : %d",ptr->info);
             }    
             else
-            {
                 printf("Position out of range...");
-                break;
-            }
+            // {
+            //     break;
+            // }
         }
         else
             break;
@@ -87,9 +87,6 @@ void traverse(node *start)
             start = start->next;
         }
     }
-    // else
-        // printf("List underflow...");
-    
     printf("\n");
 }
 
