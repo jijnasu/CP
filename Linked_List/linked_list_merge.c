@@ -11,22 +11,23 @@ typedef struct NODE
 
 node* create();
 void traverse(node *);
-void merge(node *,node *);
+node* merge(node *,node *);
 void insertion_sort(node *);
 
 void main()
 {
-    node *start1,*start2,*ptr,*reverse;
+    node *start1,*start2,*merges;
     start1=create();
+    insertion_sort(start1);
     traverse(start1);
     start2=create();
+    insertion_sort(start2);
     traverse(start2);
-    merge(start1,start2);
+    merges=merge(start1,start2);
     printf("After mearging...");
-    traverse(start1);
-    insertion_sort(start1);
-    printf("After sorting...");
-    traverse(start1);
+    traverse(merges);
+    // printf("After sorting...");
+    // traverse(start1);
     
 }
     // char ch;
@@ -76,11 +77,45 @@ void traverse(node *start)
     printf("\n");
 }
 
-void merge(node *s1,node *s2)
+node* merge(node *s1,node *s2)
 {
-    while(s1->next!=NULL)
+    node *start,*s;
+    s=(node*)malloc(sizeof(node));
+    start=s;
+    while(s1!=NULL && s2!=NULL)
+    {
+        if(s1->info < s2->info)
+        {
+            s->info = s1->info;
+            s1=s1->next;
+        }
+        else
+        {
+            s->info = s2->info;
+            // s=s->next;
+            s2=s2->next;
+        }
+        s->next=(node*)malloc(sizeof(node));
+        s=s->next;
+    }
+    while(s1)
+    {
+        s->info = s1->info;
         s1=s1->next;
-    s1->next=s2;
+        s->next=(node*)malloc(sizeof(node));
+        s=s->next;
+    }
+    while(s2)
+    {
+        s->info = s2->info;
+        s2=s2->next;
+        s->next=(node*)malloc(sizeof(node));
+        s=s->next;
+    }
+    s=NULL;
+    // traverse(s);
+    // traverse(start);
+    return start;
 }
 
 
