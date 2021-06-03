@@ -11,14 +11,14 @@ typedef struct NODE
 
 node* create();
 void traverse(node *);
-void insertion_sort(node *);
+void selection_sort(node *);
 
 void main()
 {
     node *start;
     start=create();
     traverse(start);
-    insertion_sort(start);
+    selection_sort(start);
     printf("\nAfter sorting...");
     traverse(start);
     
@@ -65,7 +65,7 @@ void traverse(node *start)
     printf("\n");
 }
 
-void insertion_sort(node *f)
+void selection_sort(node *f)
 {
     int min;
     node *i,*j;

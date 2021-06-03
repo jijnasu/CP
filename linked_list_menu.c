@@ -10,23 +10,29 @@ typedef struct NODE
 
 
 node* create();
+node* insert_ith(node *,node *,int);
+void insert_after_ele(node *,node *,int);
+node* delete_ith(node **,int *,int);
 void traverse(node *);
+void search(node *,int);
+node* reverse_list(node *);
 node* merge(node *,node *);
 void selection_sort(node *);
 
-void main()
-{
-    node *start1,*start2,*merges;
-    start1=create();
-    selection_sort(start1);
-    traverse(start1);
-    start2=create();
-    selection_sort(start2);
-    traverse(start2);
-    merges=merge(start1,start2);
-    printf("After mearging...");
-    traverse(merges);   
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 node* create()
@@ -53,6 +59,51 @@ node* create()
     }
     ptr->next = NULL;
     return start;
+}
+
+node* insert_ith(node *start,node *ele,int loc)
+{
+    int i=1;
+    node *temp;
+    if(loc==0)
+    {
+        (ele)->next = start;
+        start = ele;
+    }
+    else
+    {
+        for(temp=start;i<loc;i++)
+            if(temp->next != NULL)
+                temp=temp->next;
+            else
+                break;
+            ele->next=temp->next;
+            temp->next = ele;
+      
+    }
+    return start;
+        
+}
+
+node* delete_ith(node **front,int *size,int pos)
+{
+    node *temp=*front,*del;
+    int i=0;
+    if(pos!=1)
+    {
+        for(;i<pos-2;i++)
+            temp=temp->next;
+        del=(temp->next);
+        temp->next=(temp->next)->next;
+    }
+    else
+    {
+        del=*front;
+        *front=(*front)->next;
+    }
+        
+    (*size)--;
+    return del;
 }
 
 void traverse(node *start)
@@ -132,4 +183,64 @@ void selection_sort(node *f)
 
         }
     }
+}
+
+void search(node *start,int val)
+{
+    int loc=0,flag=0;
+    while(start!=NULL)
+    {
+        if(start->info == val)
+        {
+            flag=1;
+            break;
+        }
+        loc++;
+        start=start->next;
+    }
+    if(flag)
+        printf("The element %d is at position %d ...\n",val,loc+1);
+    else
+        printf("Element not found...\n");
+    
+}
+
+node* reverse_list(node *front)
+{
+    node *temp,*reverse;
+    reverse=(node*)malloc(sizeof(node));
+    reverse->info=front->info;
+    reverse->next=NULL;
+    front=front->next;
+    while(front!=NULL)
+    {
+        temp=reverse;
+        reverse=(node*)malloc(sizeof(node));
+        reverse->info=front->info;
+        reverse->next=temp;
+        front=front->next;
+    }
+    
+    return reverse;
+}
+
+void insert_after_ele(node *start,node *ele,int val)
+{
+    int found=1;
+    while(start->info != val)
+        if(start->next == NULL)
+        {
+            found=0;
+            break;
+        }
+        else
+            start=start->next;
+    if(found==1)
+    {
+            ele->next=start->next;
+            start->next = ele;
+    }
+    else
+        printf("Element not found...\n");
+        
 }
