@@ -25,16 +25,8 @@ void main()
     traverse(start2);
     merges=merge(start1,start2);
     printf("After mearging...");
-    traverse(merges);
-    // printf("After sorting...");
-    // traverse(start1);
-    
+    traverse(merges);   
 }
-    // char ch;
-    // insertion_sort(start2);
-    // printf("After sorting...");
-    // traverse(start2);
-    
 
 
 node* create()
@@ -92,7 +84,6 @@ node* merge(node *s1,node *s2)
         else
         {
             s->info = s2->info;
-            // s=s->next;
             s2=s2->next;
         }
         s->next=(node*)malloc(sizeof(node));
@@ -102,19 +93,23 @@ node* merge(node *s1,node *s2)
     {
         s->info = s1->info;
         s1=s1->next;
-        s->next=(node*)malloc(sizeof(node));
-        s=s->next;
+        if(s1!=NULL)
+        {
+            s->next=(node*)malloc(sizeof(node));
+            s=s->next;
+        }
     }
     while(s2)
     {
         s->info = s2->info;
         s2=s2->next;
-        s->next=(node*)malloc(sizeof(node));
-        s=s->next;
+        if(s2!=NULL)
+        {
+            s->next=(node*)malloc(sizeof(node));
+            s=s->next;
+        }
     }
-    s=NULL;
-    // traverse(s);
-    // traverse(start);
+    s->next=NULL;
     return start;
 }
 
