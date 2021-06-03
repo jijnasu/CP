@@ -12,21 +12,28 @@ typedef struct NODE
 node* create();
 void traverse(node *);
 void merge(node *,node *);
+void insertion_sort(node *);
 
 void main()
 {
     node *start1,*start2,*ptr,*reverse;
-    // char ch;
     start1=create();
     traverse(start1);
     start2=create();
     traverse(start2);
-    // traverse(start);
     merge(start1,start2);
     printf("After mearging...");
     traverse(start1);
+    insertion_sort(start1);
+    printf("After sorting...");
+    traverse(start1);
     
 }
+    // char ch;
+    // insertion_sort(start2);
+    // printf("After sorting...");
+    // traverse(start2);
+    
 
 
 node* create()
@@ -74,4 +81,25 @@ void merge(node *s1,node *s2)
     while(s1->next!=NULL)
         s1=s1->next;
     s1->next=s2;
+}
+
+
+void insertion_sort(node *f)
+{
+    int min;
+    node *i,*j;
+    for(i=f;i->next!=NULL;i=i->next)
+    {
+        min=i->info;
+        for(j=i->next;j!=NULL;j=j->next)
+            if(j->info < min)
+                min=j->info;
+        if(min != i->info)
+        {
+            for(j=i->next;(j!=NULL) && (j->info != min);j=j->next);
+            j->info=i->info;
+            i->info=min;
+
+        }
+    }
 }
