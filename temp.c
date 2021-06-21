@@ -1,9 +1,109 @@
-// #include<stdio.h>
-// void main()
-// {
-//     printf("sdhjjfsk
-//             \nhfhf");
-// }
+// / inserting in the ith position
+#include<stdio.h>
+#include<malloc.h>
+
+struct Node
+{
+    int info;
+    struct Node *prev,*next;
+};
+typedef struct Node node;
+node* create(node*);
+void traverse(node*);
+node* insert_at_ith(node*,int);
+int main()
+{
+    int i;
+    node *start=NULL;
+    start=create(start);
+    traverse(start);
+    printf("\n enter i:");
+    scanf("%d",&i);
+    start = insert_at_ith(start,i);
+    traverse(start);
+    return 0;
+}
+node* create(node*s)
+{
+    node *pre,*temp;
+    if(s==NULL)
+    {
+        s=(node*)malloc(sizeof(node));
+        printf("input info to 1st node:");
+        scanf("%d",&(s->info));
+        s->prev=NULL;
+        s->next=NULL;
+    }
+    temp=s;
+    char ch='y';
+    while(ch=='y')
+    {
+        temp->next=(node*)malloc(sizeof(node));
+        pre=temp;
+        temp=temp->next;
+        printf("\n enter new node:");
+        scanf("%d",&(temp->info));
+        temp->prev=pre;
+        printf("\n input 'y' to proceed and 'n' to stop:");
+        scanf(" %c",&ch);
+
+    }
+    temp->next=NULL;
+    return s;
+}
+void traverse(node*s)
+{
+    node*temp,*ptr;
+    temp=s;
+
+    printf("\n forward traversal:");
+    while(temp!=NULL)
+    {
+        ptr=temp;
+        printf("%d\t",temp->info);
+        temp=temp->next;
+    }
+    printf("\n backward traversal:");
+    while(ptr!=NULL)
+    {
+
+        printf("%d\t",ptr->info);
+        ptr=ptr->prev;
+    }
+
+}
+node* insert_at_ith(node*s,int i)
+{
+    node *temp,*temp1,*new;
+    new=(node*)malloc(sizeof(node));
+    printf("\n input data to the new node: ");
+    scanf("%d",&(new->info));
+    if(i==0)
+    {
+        temp=s;
+        s=new;
+        s->next=temp;
+        s->next->prev=s;
+        s->prev=NULL;
+    }
+    else
+    {
+        int k=1;
+        temp=s;
+        while(k<i)
+        {
+            temp=temp->next;
+            k++;
+        }
+            temp1=temp->next;
+            temp->next=new;
+            new->prev=temp;
+            new->next=temp1;
+            temp1->prev=new;
+
+    }
+    return s;
+}
 
 
 

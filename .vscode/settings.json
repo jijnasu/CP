@@ -5,6 +5,7 @@
         "chrono": "c",
         "algorithm": "c",
         "ratio": "c",
-        "cmath": "c"
+        "cmath": "c",
+        "regex": "c"
     }
 }
