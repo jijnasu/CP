@@ -1,109 +1,278 @@
-// / inserting in the ith position
 #include<stdio.h>
-#include<malloc.h>
+#include<stdlib.h>
 
-struct Node
-{
-    int info;
-    struct Node *prev,*next;
-};
-typedef struct Node node;
-node* create(node*);
-void traverse(node*);
-node* insert_at_ith(node*,int);
-int main()
-{
-    int i;
-    node *start=NULL;
-    start=create(start);
-    traverse(start);
-    printf("\n enter i:");
-    scanf("%d",&i);
-    start = insert_at_ith(start,i);
-    traverse(start);
-    return 0;
-}
-node* create(node*s)
-{
-    node *pre,*temp;
-    if(s==NULL)
-    {
-        s=(node*)malloc(sizeof(node));
-        printf("input info to 1st node:");
-        scanf("%d",&(s->info));
-        s->prev=NULL;
-        s->next=NULL;
-    }
-    temp=s;
-    char ch='y';
-    while(ch=='y')
-    {
-        temp->next=(node*)malloc(sizeof(node));
-        pre=temp;
-        temp=temp->next;
-        printf("\n enter new node:");
-        scanf("%d",&(temp->info));
-        temp->prev=pre;
-        printf("\n input 'y' to proceed and 'n' to stop:");
-        scanf(" %c",&ch);
 
-    }
-    temp->next=NULL;
-    return s;
-}
-void traverse(node*s)
+
+void main()
 {
-    node*temp,*ptr;
-    temp=s;
-
-    printf("\n forward traversal:");
-    while(temp!=NULL)
-    {
-        ptr=temp;
-        printf("%d\t",temp->info);
-        temp=temp->next;
-    }
-    printf("\n backward traversal:");
-    while(ptr!=NULL)
-    {
-
-        printf("%d\t",ptr->info);
-        ptr=ptr->prev;
-    }
+    int *u,z;
+    z=55;
+    u=&z;
+    printf("%d,%d,%d,%d,%d",&u,u,*u,&z,z);
 
 }
-node* insert_at_ith(node*s,int i)
-{
-    node *temp,*temp1,*new;
-    new=(node*)malloc(sizeof(node));
-    printf("\n input data to the new node: ");
-    scanf("%d",&(new->info));
-    if(i==0)
-    {
-        temp=s;
-        s=new;
-        s->next=temp;
-        s->next->prev=s;
-        s->prev=NULL;
-    }
-    else
-    {
-        int k=1;
-        temp=s;
-        while(k<i)
-        {
-            temp=temp->next;
-            k++;
-        }
-            temp1=temp->next;
-            temp->next=new;
-            new->prev=temp;
-            new->next=temp1;
-            temp1->prev=new;
 
-    }
-    return s;
-}
+
+// //Circular double linked list //
+// typedef struct NODE
+// {
+//     int info;
+//     struct NODE *next,*prev;
+// } node;
+
+// node* deletefrombegin(node*);
+// node * create(node *);
+// void traverse(node *);
+// void reverse_traverse(node *);
+// void deletefromend(node *);
+// node* insertfrombegin(node *);
+// void insertatend(node *);
+
+// int main()
+// {
+//     node *start;
+//     start = NULL;
+//     start = create(start);
+//     printf("\nElements of the list are :\n");
+//     traverse(start);
+//     printf("\nReversing the elemnts of the list :\n");
+//     reverse_traverse(start);
+//     printf("\ninsert first node :\n");
+//     start = insertfrombegin(start);
+//     traverse(start);
+//     printf("\ninsert last node :\n");
+//     insertatend(start);
+//     traverse(start);
+//     printf("\ndelete last node :\n");
+//     deletefromend(start);
+//     traverse(start);
+//     printf("\ndelete first node :\n");
+//     start = deletefrombegin(start);
+//     traverse(start);
+//     return 0;
+// }
+// node * create(node *s)
+// {
+//     node *temp,*pre;
+//     char ch = 'y';
+//     if (s == NULL)
+//     {
+//         s = (node *)malloc(sizeof(node));
+//         printf("\nEnter 1st element of the list :");
+//         scanf("%d", &(s->info));
+//         s->prev = NULL;
+//         s->next = NULL;
+//     }
+//     temp = s;
+//     while (ch == 'y')
+//     {
+//         temp->next = (node *) malloc(sizeof(node));
+//         pre = temp;
+//         temp = temp->next;
+//         printf("\nEnter element to the list :");
+//         scanf("%d",&(temp->info));
+//         temp->prev = pre;
+//         printf("\nEnter y to continue or n to stop :");
+//         scanf(" %c", &ch);
+//     }
+//     temp->next = s;
+//     s->prev = temp;
+//     return s;
+// }
+
+// void traverse(node *s)
+// {
+//     node * temp;
+//     temp = s;
+//     do
+//     {
+//         printf("%d\t",temp->info);
+//         temp = temp->next;
+//     }
+//     while (temp != s);
+// }
+
+// void reverse_traverse(node *s)
+// {
+//     node * temp;
+//     temp = s;
+//     do
+//     {
+//         temp = temp->prev;
+//         printf("%d\t",temp->info);
+//     }
+//     while(temp != s);
+// }
+
+// void deletefromend(node *s)
+// {
+//     node *p, *p1;
+//     p=s;
+//     do
+//     {
+//         p1=p;
+//         p=p->next;
+//     }
+//     while(p->next!=s);
+//     p1->next=s;
+//     free(p);
+// }
+
+// node* deletefrombegin(node* s)
+// {
+//     node *temp;
+//     temp=s;
+//     s=s->next;
+//     s->prev=s;
+//     free(temp);
+//     return s;
+// }
+
+// node* insertfrombegin(node *s)
+// {
+//     node *new;
+//     new=(node*)malloc(sizeof(node));
+//     printf("\n input node that will be added to 1st :");
+//     scanf("%d",&(new->info));
+//     new->next=s;
+//     new->prev=s->prev;
+//     s->prev=new;
+//     new->prev->next = new;
+//     s=new;
+//     return s;
+// }
+
+// void insertatend(node *s)
+// {
+//     node *new, *temp;
+//     temp=s;
+//     do
+//     {
+//         temp=temp->next;
+//     }
+//     while(temp->next!=s);
+//     new=(node*)malloc(sizeof(node));
+//     printf("\n input node that will be added to last :");
+//     scanf("%d",&(new->info));
+//     new->next=s;
+//     new->prev=temp;
+//     temp->next=new;
+// }
+
+
+
+
+
+
+
+
+
+// // / inserting in the ith position
+// #include<stdio.h>
+// #include<malloc.h>
+
+// struct Node
+// {
+//     int info;
+//     struct Node *prev,*next;
+// };
+// typedef struct Node node;
+// node* create(node*);
+// void traverse(node*);
+// node* insert_at_ith(node*,int);
+// int main()
+// {
+//     int i;
+//     node *start=NULL;
+//     start=create(start);
+//     traverse(start);
+//     printf("\n enter i:");
+//     scanf("%d",&i);
+//     start = insert_at_ith(start,i);
+//     traverse(start);
+//     return 0;
+// }
+// node* create(node*s)
+// {
+//     node *pre,*temp;
+//     if(s==NULL)
+//     {
+//         s=(node*)malloc(sizeof(node));
+//         printf("input info to 1st node:");
+//         scanf("%d",&(s->info));
+//         s->prev=NULL;
+//         s->next=NULL;
+//     }
+//     temp=s;
+//     char ch='y';
+//     while(ch=='y')
+//     {
+//         temp->next=(node*)malloc(sizeof(node));
+//         pre=temp;
+//         temp=temp->next;
+//         printf("\n enter new node:");
+//         scanf("%d",&(temp->info));
+//         temp->prev=pre;
+//         printf("\n input 'y' to proceed and 'n' to stop:");
+//         scanf(" %c",&ch);
+
+//     }
+//     temp->next=NULL;
+//     return s;
+// }
+// void traverse(node*s)
+// {
+//     node*temp,*ptr;
+//     temp=s;
+
+//     printf("\n forward traversal:");
+//     while(temp!=NULL)
+//     {
+//         ptr=temp;
+//         printf("%d\t",temp->info);
+//         temp=temp->next;
+//     }
+//     printf("\n backward traversal:");
+//     while(ptr!=NULL)
+//     {
+
+//         printf("%d\t",ptr->info);
+//         ptr=ptr->prev;
+//     }
+
+// }
+// node* insert_at_ith(node*s,int i)
+// {
+//     node *temp,*temp1,*new;
+//     new=(node*)malloc(sizeof(node));
+//     printf("\n input data to the new node: ");
+//     scanf("%d",&(new->info));
+//     if(i==0)
+//     {
+//         temp=s;
+//         s=new;
+//         s->next=temp;
+//         s->next->prev=s;
+//         s->prev=NULL;
+//     }
+//     else
+//     {
+//         int k=1;
+//         temp=s;
+//         while(k<i)
+//         {
+//             temp=temp->next;
+//             k++;
+//         }
+//             temp1=temp->next;
+//             temp->next=new;
+//             new->prev=temp;
+//             new->next=temp1;
+//             temp1->prev=new;
+
+//     }
+//     return s;
+// }
 
 
 

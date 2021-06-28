@@ -97,6 +97,26 @@ node* del_val_node(node *f,int val)
     
 }
 
+node* reverse(node *f)
+{
+    int i=0,*temp = (int*)malloc(size * sizeof(int));
+    node *ptr=f;
+
+    while(ptr)
+    {
+        temp[i++]=ptr->info;
+        ptr = ptr->next;
+    }
+    ptr = f;
+    while(ptr)
+    {
+        ptr->info = temp[--i];
+        ptr = ptr->next;
+    }
+    return f;
+
+    
+}
 void main()
 {
     node *start=NULL;
@@ -107,8 +127,8 @@ void main()
     {
         int opn;
         printf("\nMENU:\n01- Create\n02- Add at Front\n03- Add at Rear\n04- Add at ith node\n05- Add after an Element");
-        printf("\n06- Delete at Front\n07- Delete at Rear\n08- Delete at ith\n09- Delete node with a value\n10- Trsverse\n11- Trsverse");
-        printf("\n12- Reverse\n13- Exit\nSelect : ");
+        printf("\n06- Delete at Front\n07- Delete at Rear\n08- Delete at ith\n09- Delete node with a value\n10- Traverse");
+        printf("\n11- Reverse\n12- Exit\nSelect : ");
         scanf("%d",&opn);
         switch(opn)
         {
@@ -140,27 +160,17 @@ void main()
                     break;
             case 10:traverse(start);
                     break;
+            case 11:start = reverse(start);
+                    break;
+            case 12:ch = 'n';
+                    break;
+            default:printf("Invalid input...");
         }
 
     }
     
     
 }
-
-
-
-        // printf("Enter location to insert : ");
-        // scanf("%d",&pos);
-        // if(pos>=0 && pos<=size)
-        // {
-        //     start = add_at_ith(start,pos);
-        //     traverse(start);
-        // }
-        // else
-        //     printf("Invalid location...");
-        // printf("Do you again want to insert : ");
-        // scanf(" %c",&ch);
-
 
 node* add_at_ith(node *f,int pos)
 {
