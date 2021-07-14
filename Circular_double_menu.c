@@ -11,7 +11,6 @@ typedef struct NODE
 
 
 
-
 node* create();
 void traverse(node *);
 node* add_front(node *);
@@ -55,15 +54,20 @@ void main()
                     break;
             case 6: start = del_at_front(start);
                     break;
-            case 7: del_at_rear(start);
+            case 7: start = del_at_rear(start);
                     break;
             case 8: printf("Enter the position : ");
                     scanf("%d",&pos);
                     start = del_ith_node(start,pos-1);
                     break;
-            case 9: printf("Enter the value to be deleted : ");
-                    scanf("%d",&val);
-                    start = del_val_node(start,val);
+            case 9: if(size<=0)
+                        printf("List underflow...");
+                    else
+                    {
+                        printf("Enter the value to be deleted : ");
+                        scanf("%d",&val);
+                        start = del_val_node(start,val);
+                    }
                     break;
             case 10:traverse(start);
                     break;
@@ -88,44 +92,48 @@ node* add_at_ith(node *f,int pos)
         add_rear(f);
         return f;
     }
-    
-    int i=1;
-    while(f->next!=NULL && i++<pos)
-        f=f->next;
-    node *start=f,*temp=f->next;
-    f->next = (node*)malloc(sizeof(node));
-    printf("Enter the node : ");
-    scanf("%d",&(f->next->info));
-    f->next->next=temp;
-    f->next->prev = f;
-    temp->prev=f->next;
-    size++;
-    return start;
+    if(pos>0 && pos<size)
+    {
+        node *front = f;
+        int i=1;
+        while(f->next!=front && i++<pos)
+            f=f->next;
+        node *temp=f->next;
+        f->next = (node*)malloc(sizeof(node));
+        printf("Enter the node : ");
+        scanf("%d",&(f->next->info));
+        f->next->next=temp;
+        size++;
+        return front;
+    }
+    else
+        printf("Index out of range...");
     
 }
 
 node* add_front(node *f)
 {
-    node *ptr;
-    ptr = (node*)malloc(sizeof(node));
+    node *ptr=f;
+    while(ptr->next!=f)
+        ptr = ptr->next;
+    ptr->next = (node*)malloc(sizeof(node));
+    ptr = ptr->next;
     printf("Enter the node : ");
     scanf("%d",&(ptr->info));
     ptr->next=f;
-    ptr->prev=NULL;
-    f->prev = ptr;
     size++;
     return ptr;
 }
 
 void add_rear(node *f)
 {
-    while(f->next!=NULL)
+    node *front = f;
+    while(f->next!=front)
         f=f->next;
     f->next = (node*)malloc(sizeof(node));
     printf("Enter the node : ");
     scanf("%d",&(f->next->info));
-    f->next->next=NULL;
-    f->next->prev = f;
+    f->next->next=front;
     size++;
 }
 
@@ -136,10 +144,10 @@ node* create()
     ptr = start = (node*)malloc(sizeof(node));
     printf("Enter information for 1st node : ");
     scanf("%d",&(start->info));
-    start->next = NULL;
-    start->prev = NULL;
+    start->next = start;
+    start->prev = start;
     size++;
-    while(1)
+    while(ch == 'y')
     {
         printf("Do you want to add node(y/n) : ");
         scanf(" %c",&ch);
@@ -148,77 +156,94 @@ node* create()
             ptr->next = (node*)malloc(sizeof(node));
             printf("Enter info. for new node : ");
             scanf("%d",&(ptr->next->info));
-            ptr->next->prev=ptr;
+            ptr->next->prev = ptr;
             ptr = ptr->next;
             size++;
         }
         else
-            break;
+            ptr->next = start;
     }
-    ptr->next = NULL;
     return start;
 }
 
 void traverse(node *start)
 {
     printf("Size of Linked List : %d",size);
-    node *end;
     if(start != NULL)
     {
-        printf("\nThe linked list in forward traverse : ");
-        while(start != NULL)
+        node *ptr=start;
+        printf("\nThe linked list is : ");
+        printf("%d  ",ptr->info);
+        ptr = ptr->next;
+        while(ptr != start)
         {
-            printf("%d  ",start->info);
-            end = start;
-            start = start->next;
+            printf("%d  ",ptr->info);
+            ptr = ptr->next;
         }
-        printf("\nThe linked list in backward traverse : ");
-        while(end != NULL)
-        {
-            printf("%d  ",end->info);
-            end = end->prev;
-        }
-        
     }
     printf("\n");
 }
 
 
+
+
 void add_after_node(node *f,int val)
 {
-    while(f->info!=val)
+    node *start = f;
+    while(f->info!=val && f->next!=start)
         f = f->next;
-    if(f->next==NULL)
-        add_rear(f);
+    if(f->info!=val && f->next==start)
+        printf("Value not found...");
     else
     {
-        node *temp = (node*)malloc(sizeof(node));
+        node *temp = f->next;
+        f->next = (node*)malloc(sizeof(node));
+        f = f->next;
         printf("Enter the value of the node : ");
-        scanf("%d",&(temp->info));
-        temp->next = f->next;
-        temp->prev = f;
+        scanf("%d",&(f->info));
         f->next = temp;
-        temp->next->prev = temp;
         size++;
     }
 }
 
 node* del_at_front(node *f)
 {
-    f->next->prev=NULL;
+    if(f==NULL)
+    {
+        printf("List underflow...");
+        return NULL;
+    }
+    if(size==1)
+    {
+        size--;
+        return NULL;
+    }
+    node *start = f;
+    while(f->next!=start)
+        f = f->next;
+    f->next = start->next;
     size--;
-    return f->next;
+    return start->next;
 }
 
 node* del_at_rear(node *f)
 {
-    size--;
-    if(f->next==NULL)
+    if(f==NULL)
+    {
+        printf("List underflow...");
         return NULL;
-    while(f->next->next)
+    }
+    if(size==1)
+    {
+        size--;
+        return NULL;
+    }
+    node *front = f;
+    while(f->next->next!=front)
         f = f->next;
-    f->next = NULL;
-    return f;
+    size--;
+    f->next = front;
+    return front;
 }
 
 node* del_ith_node(node *f,int loc)
@@ -236,7 +261,6 @@ node* del_ith_node(node *f,int loc)
             loc--;
         }
         temp->next = temp->next->next;
-        temp->next->prev = temp;
         size--;
     }
     return f;
@@ -244,25 +268,30 @@ node* del_ith_node(node *f,int loc)
 
 node* del_val_node(node *f,int val)
 {
+    node *start = f;
+    if(size==1 && f->info==val)
+    {
+        size--;
+        return NULL;
+    }
     if(f->info == val)
     {
-        f->next->prev = NULL;
         size--;
+        while(f->next!=start)
+            f = f->next;
+        f->next = start->next;
         return f->next;
     }
-    node *start = f;
-    while(f->next!=NULL && f->next->info!=val)
+    while(f->next!=start && f->next->info!=val)
         f=f->next;
-    if(f->next->next)
+    if(f->next->info==val)
     {
         f->next = f->next->next;
-        f->next->prev = f;
         size--;
     }
     else
-        del_at_rear(f);
+        printf("Element not found...");
     return start;
-    
 }
 
 node* reverse(node *f)
@@ -270,16 +299,20 @@ node* reverse(node *f)
     int i=0,*temp = (int*)malloc(size * sizeof(int));
     node *ptr=f;
 
-    while(ptr)
+    while(ptr->next!=f)
     {
         temp[i++]=ptr->info;
         ptr = ptr->next;
     }
+    temp[i++]=ptr->info;
     ptr = f;
-    while(ptr)
+    while(ptr->next!=f)
     {
         ptr->info = temp[--i];
         ptr = ptr->next;
     }
+        ptr->info = temp[--i];
     return f;
+
+    
 }

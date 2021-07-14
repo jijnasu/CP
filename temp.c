@@ -1,16 +1,143 @@
 #include<stdio.h>
-#include<stdlib.h>
+#define size 10
+void QUICK_SORT(int[],int,int);
+int PARTICITION(int[],int,int);
+void TRAVERSE(int[]);
 
-
-
-void main()
+int main()
 {
-    int *u,z;
-    z=55;
-    u=&z;
-    printf("%d,%d,%d,%d,%d",&u,u,*u,&z,z);
-
+    int a[size],i,p,r;
+    p=0;
+    r=size-1;
+    printf("ENTER THE ELEMENTS: ");
+    for(i=0;i<size;i++)
+    {
+        scanf("%d",&a[i]);
+    }
+    QUICK_SORT(a,p,r);
+    TRAVERSE(a);
 }
+void QUICK_SORT(int a[],int p,int r)
+{
+    int q;
+    if(p<r)
+    {
+        q=PARTICITION(a,p,r);
+        QUICK_SORT(a,p,q-1);
+        QUICK_SORT(a,q+1,r);
+    }
+}
+int PARTICITION(int a[],int p,int r)
+{
+    int pivot,i,j,temp;
+    pivot=a[r];
+    i=p-1;
+    j=p;
+    while(j<=r-1)
+    {
+        if(a[j]<=pivot)
+        {
+            i++;
+            temp=a[i];
+            a[i]=a[j];
+            a[j]=temp;
+        }
+        j++;
+    }
+    temp=a[r];
+    a[r]=a[i+1];
+    a[i+1]=temp;
+    return i+1;
+}
+void TRAVERSE(int a[])
+{
+    int i;
+    printf("\n");
+    for(i=0;i<size;i++)
+    {
+        printf("%d  ",a[i]);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// #include<stdio.h>
+// #include<stdlib.h>
+
+
+
+// struct ABC
+// {
+//     int y;
+//     // struct abc z;
+//     struct abc
+//     {
+//         int x;
+        
+//     }z;
+// };
+
+
+// void main()
+// {
+//     struct ABC a;
+//     int yyy,yy;
+//     scanf("%d",&yyy);
+//     // scanf("%d",&a.z.x);
+//     if(yyy==NULL)
+//         printf("%d",yyy);
+//     else
+//         printf("Nooo");
+//     scanf("%d",&yy);
+//     // scanf("%d",&a.z.x);
+//     if(yy==NULL)
+//         printf("%d",yy);
+//     else
+//         printf("Nooo");
+//     // printf("%d",a.z.x);
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// void main()
+// {
+//     int *u,z;
+//     z=55;
+//     u=&z;
+//     printf("%d,%d,%d,%d,%d",&u,u,*u,&z,z);
+
+// }
 
 
 // //Circular double linked list //

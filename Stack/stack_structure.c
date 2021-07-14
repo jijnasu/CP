@@ -22,15 +22,14 @@ int main()
     s.top=-1;
     while(1)
     {
-        printf("\nInput \n 1. push() \n 2. pop() \n 3. traverse() \n 4. exit() \n");
+        printf("\nInput :\n01. push() \n02. pop() \n03. traverse() \n04. exit() \n");
         scanf("%d",&opt);
         switch(opt)
         {
-
             case 1:
                 if(s.top<size-1)
                 {
-                    printf("Insert element to the stack \n");
+                    printf("Insert element to push to the stack : ");
                     scanf("%d",&ele);
                     push(&s,ele);
                 }   
@@ -85,6 +84,10 @@ void traverse(struct stack *s)
     if(s->top<0)
         printf("Empty stack...");
     else
+    {
+        printf("The stack is :\n");
         for(i=(s->top);i>=0;i--)
             printf("%d\n",s->stk[i]);
+    }
 }
+        
