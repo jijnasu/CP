@@ -28,7 +28,7 @@ void bubblesort(node*);
 
 void main()
 {
-    node *start=NULL;
+    node *start=NULL,*last=NULL;
     int pos,val;
     char ch='y';
     traverse(start);
@@ -42,26 +42,43 @@ void main()
         switch(opn)
         {
             case 1: start=create();
+                    last = start->prev;
                     break;
             case 2: start = add_front(start);
+                    last = start->prev;
                     break;
             case 3: add_rear(start);
+                    last = start->prev;
                     break;
             case 4: printf("Enter the position : ");
                     scanf("%d",&pos);
                     start = add_at_ith(start,pos-1);
+                    last = start->prev;
                     break;
             case 5: printf("Enter the value : ");
                     scanf("%d",&val);
                     add_after_node(start,val);
+                    last = start->prev;
                     break;
             case 6: start = del_at_front(start);
+                    if(start)
+                        last = start->prev;
+                    else
+                        last = NULL;
                     break;
             case 7: start = del_at_rear(start);
+                    if(start)
+                        last = start->prev;
+                    else
+                        last = NULL;
                     break;
             case 8: printf("Enter the position : ");
                     scanf("%d",&pos);
                     start = del_ith_node(start,pos-1);
+                    if(start)
+                        last = start->prev;
+                    else
+                        last = NULL;
                     break;
             case 9: if(size<=0)
                         printf("List underflow...");
@@ -70,11 +87,16 @@ void main()
                         printf("Enter the value to be deleted : ");
                         scanf("%d",&val);
                         start = del_val_node(start,val);
+                        if(start)
+                            last = start->prev;
+                        else
+                            last = NULL;
                     }
                     break;
-            case 10:traverse(start);
+            case 10:traverse(last);
                     break;
             case 11:start = reverse(start);
+                    last = start->prev;
                     break;
             case 12:bubblesort(start);
                     break;
@@ -183,6 +205,7 @@ void traverse(node *start)
     printf("Size of Linked List : %d",size);
     if(start != NULL)
     {
+        start = start->next;
         node *ptr=start;
         printf("\nThe linked list forward traverse : ");
         printf("%d  ",ptr->info);
