@@ -22,6 +22,9 @@ node* del_ith_node(node*,int);
 node* del_at_rear(node*);
 node* del_at_front(node*);
 void add_after_node(node*,int);
+void swap(int*,int*);
+void bubblesort(node*);
+
 
 void main()
 {
@@ -34,7 +37,7 @@ void main()
         int opn;
         printf("\nMENU:\n01- Create\n02- Add at Front\n03- Add at Rear\n04- Add at ith node\n05- Add after an Element");
         printf("\n06- Delete at Front\n07- Delete at Rear\n08- Delete at ith\n09- Delete node with a value\n10- Traverse");
-        printf("\n11- Reverse\n12- Exit\nSelect : ");
+        printf("\n11- Reverse\n12- Bubble Sort\n13- Exit\nSelect : ");
         scanf("%d",&opn);
         switch(opn)
         {
@@ -73,7 +76,9 @@ void main()
                     break;
             case 11:start = reverse(start);
                     break;
-            case 12:ch = 'n';
+            case 12:bubblesort(start);
+                    break;
+            case 13:ch = 'n';
                     break;
             default:printf("Invalid input...");
         }
@@ -100,9 +105,11 @@ node* add_at_ith(node *f,int pos)
             f=f->next;
         node *temp=f->next;
         f->next = (node*)malloc(sizeof(node));
+        f->next->prev = f;
         printf("Enter the node : ");
         scanf("%d",&(f->next->info));
         f->next->next=temp;
+        temp->prev = f->next;
         size++;
         return front;
     }
@@ -117,10 +124,12 @@ node* add_front(node *f)
     while(ptr->next!=f)
         ptr = ptr->next;
     ptr->next = (node*)malloc(sizeof(node));
+    ptr->next->prev = ptr;
     ptr = ptr->next;
     printf("Enter the node : ");
     scanf("%d",&(ptr->info));
     ptr->next=f;
+    f->prev = ptr;
     size++;
     return ptr;
 }
@@ -131,9 +140,11 @@ void add_rear(node *f)
     while(f->next!=front)
         f=f->next;
     f->next = (node*)malloc(sizeof(node));
+    f->next->prev = f;
     printf("Enter the node : ");
     scanf("%d",&(f->next->info));
     f->next->next=front;
+    front->prev = f->next;
     size++;
 }
 
@@ -162,6 +173,7 @@ node* create()
         }
         else
             ptr->next = start;
+            start->prev = ptr;
     }
     return start;
 }
@@ -172,7 +184,7 @@ void traverse(node *start)
     if(start != NULL)
     {
         node *ptr=start;
-        printf("\nThe linked list is : ");
+        printf("\nThe linked list forward traverse : ");
         printf("%d  ",ptr->info);
         ptr = ptr->next;
         while(ptr != start)
@@ -180,6 +192,17 @@ void traverse(node *start)
             printf("%d  ",ptr->info);
             ptr = ptr->next;
         }
+        ptr = start->prev;
+        // printf("%d  ",ptr->info);
+        // ptr = ptr->prev->prev;
+        printf("\nThe linked list in backward traverse : ");
+        while(ptr != start)
+        {
+            printf("%d  ",ptr->info);
+            ptr = ptr->prev;
+        }
+        printf("%d  ",ptr->info);
+        
     }
     printf("\n");
 }
@@ -198,10 +221,12 @@ void add_after_node(node *f,int val)
     {
         node *temp = f->next;
         f->next = (node*)malloc(sizeof(node));
+        f->next->prev = f;
         f = f->next;
         printf("Enter the value of the node : ");
         scanf("%d",&(f->info));
         f->next = temp;
+        temp->prev = f;
         size++;
     }
 }
@@ -222,6 +247,7 @@ node* del_at_front(node *f)
     while(f->next!=start)
         f = f->next;
     f->next = start->next;
+    start->next->prev = f;
     size--;
     return start->next;
 }
@@ -241,8 +267,9 @@ node* del_at_rear(node *f)
     node *front = f;
     while(f->next->next!=front)
         f = f->next;
-    size--;
     f->next = front;
+    front->prev = f;
+    size--;
     return front;
 }
 
@@ -261,6 +288,7 @@ node* del_ith_node(node *f,int loc)
             loc--;
         }
         temp->next = temp->next->next;
+        temp->next->prev = temp;
         size--;
     }
     return f;
@@ -287,6 +315,7 @@ node* del_val_node(node *f,int val)
     if(f->next->info==val)
     {
         f->next = f->next->next;
+        f->next->prev = f;
         size--;
     }
     else
@@ -315,4 +344,21 @@ node* reverse(node *f)
     return f;
 
     
+}
+
+void swap(int *a,int *b)
+{
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+
+void bubblesort(node *front)
+{
+    node *f = front;
+    int i,j;
+    for(i=1;i<=size;i++)
+        for(j=0,f=front;j<size-i;j++,f = f->next)
+            if(f->info > f->next->info)
+                swap(&f->info,&f->next->info);
 }
